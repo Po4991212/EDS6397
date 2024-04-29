@@ -1,0 +1,200 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}{{ hotel.name }} - Hotel Details{% endblock %}
+
+{% block content %}
+<section class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover"
+    style="background-image: url('{% static 'img/photo/hotel-background.jpeg' %}');">
+    <div class="container overlay-content">
+        <div class="d-flex justify-content-between align-items-start flex-column flex-lg-row align-items-lg-end">
+            <div class="overlay-content">
+                <div class="badge badge-pill badge-primary px-3 py-2 mb-4">
+                    <a href="{% url 'hotel:hotel_list' %}" class="text-white">All Hotels</a>
+                </div>
+                <h1 class="text-shadow text-white">{{ hotel.name }}</h1>
+                <p class="text-white"><i class="fa fa-map-marker-alt fas me-2"></i>{{ hotel.city }}, {{ hotel.country }}
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-white">
+                        <p class="mb-0"><span class="badge badge-success">Rooms available: {{ hotel.total_rooms }}</span></p>
+                        <p class="mb-0"><span class="badge badge-warning">Nightly Rate: ${{ hotel.nightly_rate }}</span>
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="calltoactions">
+                <a class="btn btn-primary" href="#leaveReview" onclick="$('#leaveReview').collapse('show')"
+                    data-smooth-scroll>Leave a review</a>
+                <a class="btn btn-primary"
+                    href="{% url 'booking:create_booking' service_type='hotel' service_id=hotel.id %}">Book this hotel</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-6">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- About Hotel-->
+                <div class="text-block">
+                    <h3 class="mb-3">About the Hotel</h3>
+                    <p class="text-muted"> Located in the heart of {{ hotel.city }}, {{ hotel.name }} offers luxury and
+                        comfort, with easy access to the city's popular attractions. Whether you are here for business
+                        or leisure, {{ hotel.name }} will make your stay unforgettable.</p>
+                </div>
+                <div class="text-block">
+                    <!-- Hotel Amenities-->
+                    <h3 class="mb-4">Amenities</h3>
+                    <ul class="amenities-list list-inline">
+                        <li class="list-inline-item mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-circle bg-secondary me-2"><i class="fa fa-wifi"></i></div>
+                                <span>Free WiFi</span>
+                            </div>
+                        </li>
+                        <li class="list-inline-item mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-circle bg-secondary me-2"><i class="fa fa-swimming-pool"></i></div>
+                                <span>Swimming Pool</span>
+                            </div>
+                        </li>
+                        <li class="list-inline-item mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-circle bg-secondary me-2"><i class="fa fa-spa"></i></div>
+                                <span>Spa Services</span>
+                            </div>
+                        </li>
+                        <li class="list-inline-item mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-circle bg-secondary me-2"><i class="fa fa-utensils"></i></div>
+                                <span>Restaurant and Bar</span>
+                            </div>
+                        </li>
+                        <li class="list-inline-item mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-circle bg-secondary me-2"><i class="fa fa-concierge-bell"></i></div>
+                                <span>24-hour Concierge</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="text-block">
+                    <p class="subtitle text-sm text-primary">Reviews </p>
+                    <h5 class="mb-4">Listing Reviews </h5>
+                    <div id="reviews-container">
+                        {% include 'partials/htmx_add_review.html' %}
+                    </div>
+                    <div class="py-5">
+                        <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a
+                            review</button>
+                        <div class="collapse mt-4" id="leaveReview">
+                            <h5 class="mb-4">Leave a review</h5>
+                            <form class="form" id="contact-form"
+                                hx-post="{% url 'review:htmx_add_review' service_type='hotel' service_id=hotel.id %}"
+                                hx-target="#reviews-container" hx-trigger="submit">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="mb-4">
+                                            <label for="rating" class="form-label">Your rating *</label>
+                                            <select class="form-select focus-shadow-0" name="rating" id="rating">
+                                                <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
+                                                <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
+                                                <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
+                                                <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>
+                                                <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="comment" class="form-label">Review text *</label>
+                                    <textarea class="form-control" rows="4" name="comment" id="comment"
+                                        placeholder="Enter your review" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Post review</button>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Gallery adapted to hotel context -->
+                <div class="text-block">
+                    <h3 class="mb-4">Gallery</h3>
+                    <div class="row gallery ms-n1 me-n1">
+                        <!-- Images sourced from static files relevant to hotels -->
+                        <div class="col-lg-4 col-6 px-1 mb-2"><a href="{% static 'img/photo/hotel1.jpeg' %}"><img
+                                    class="img-fluid" src="{% static 'img/photo/hotel1.jpeg' %}"
+                                    alt="{{ hotel.name }}"></a></div>
+                        <div class="col-lg-4 col-6 px-1 mb-2"><a href="{% static 'img/photo/hotel2.jpeg' %}"><img
+                                    class="img-fluid" src="{% static 'img/photo/hotel2.jpeg' %}"
+                                    alt="{{ hotel.name }}"></a></div>
+                        <div class="col-lg-4 col-6 px-1 mb-2"><a href="{% static 'img/photo/hotel3.jpeg' %}"><img
+                                    class="img-fluid" src="{% static 'img/photo/hotel3.jpeg' %}"
+                                    alt="{{ hotel.name }}"></a></div>
+                    </div>
+                </div>
+                <!-- Additional hotel-specific sections could include customer reviews, special offers, events, etc. -->
+            </div>
+            <div class="col-lg-4">
+                <div class="ps-xl-4">
+                    <aside>
+                        <!-- Local Attractions -->
+                        <h5 class="mb-3">Local Attractions</h5>
+                        <div class="mb-4">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">Central Park</li>
+                                <li class="mb-2">The Metropolitan Museum of Art</li>
+                                <li class="mb-2">Broadway Theaters</li>
+                            </ul>
+                        </div>
+
+                        <!-- Weather Widget -->
+                        <h5 class="mb-3">Weather</h5>
+                        <div class="mb-4" id="weather-widget">
+                            <a href="https://www.weather.com/" target="_blank">Check the Weather</a>
+                            <!-- Ideally, this would be replaced by an actual weather widget -->
+                        </div>
+
+                        <h5 class="mb-3">Map</h5>
+                        <div class="mb-4" id="hotelMap" style="width:100%;height:400px;">
+                        </div>
+
+                        <!-- Additional Info -->
+                        <h5 class="mb-3">Additional Information</h5>
+                        <div class="additional-info mb-4">
+                            <p>Check-in time: 2 PM</p>
+                            <p>Check-out time: 11 AM</p>
+                            <p>Pets are allowed on request. Charges may apply.</p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function initMap() {
+        var hotelLocation = { lat: -25.344, lng: 131.036 }; // Replace with actual latitude and longitude of the hotel
+        var map = new google.maps.Map(
+            document.getElementById('hotelMap'), { zoom: 10, center: hotelLocation });
+        var marker = new google.maps.Marker({ position: hotelLocation, map: map });
+    };
+    function getGeocode(cityName, stateCode, countryCode, apiKey) {
+        var apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName},${stateCode},${countryCode}&limit=1&appid=${apiKey}`;
+
+        // Use AJAX or Fetch API to get the data
+        // After getting the data:
+        var latitude = data[0].lat;
+        var longitude = data[0].lon;
+
+        // Now that you have latitude and longitude, you can use them to display the map and weather.
+    }
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBO7XTESM8sdQqBjeoJmOdFxrEPCbAZQS4&callback=initMap">
+    </script>
+{% endblock %}

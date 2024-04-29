@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-box">
+                <div class="form-title-wrap">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h3 class="title">Flight Lists</h3>
+                            <p class="font-size-14">Showing detailed flight information.</p>
+                        </div>
+                        <div class="select-contain">
+                            <select name="select" class="select-contain-select" hx-get="{% url 'dashboard:filter_flights' %}" hx-trigger="change" hx-target="#flights-list" hx-indicator="#loading" hx-swap="innerHTML">
+                                <option value="1">Any Time</option>
+                                <option value="2">Latest</option>
+                                <option value="3">Oldest</option>
+                            </select>
+                            <div id="loading" style="display:none;">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-content">
+                    <div class="table-form table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Airline</th>
+                                    <th scope="col">Departure City</th>
+                                    <th scope="col">Arrival City</th>
+                                    <th scope="col">Departure Date</th>
+                                    <th scope="col">Departure Time</th>
+                                    <th scope="col">Arrival DateTime</th>
+                                    <th scope="col">Available Seats</th>
+                                    <th scope="col">Fare</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="flights-list">
+                                {% include 'partials/flights_table.html' %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+{% load static %}
+{% for booking in booking_context.bookings %}
+<div class="card-item card-item-list card-item--list">
+    <div class="card-body">
+        <div class="d-flex align-items-center">
+            <h3 class="card-title">{{ booking.get_booking_detail }}</h3>
+            <span
+                class="badge {% if booking.status == 'cancelled' %}badge-danger{% elif booking.status == 'ongoing' %}badge-warning{% elif booking.status == 'completed' %}badge-success{% else %}badge-info{% endif %} ml-2">
+                {{ booking.status }}</span>
+        </div>
+        <ul class="list-items list-items-2 pt-2 pb-3">
+            <li><span>Start date:</span> {{ booking.reservation_date }}</li>
+            <li><span>End date:</span> {{ booking.reservation_end_date }}</li>
+            <li><span>Booking details:</span> {{ booking.num_of_guests }} People</li>
+            <li><span>Client:</span> {{ booking.traveler_fname }} {{ booking.traveler_lname }}</li>
+            <li><span>Total Amount:</span> ${{ booking.total_amount }}</li>
+        </ul>
+        <div class="btn-box">
+            <a href="#" class="theme-btn theme-btn-small theme-btn-transparent"><i class="la la-envelope mr-1"></i>Send
+                Message</a>
+        </div>
+    </div>
+    <div class="action-btns">
+        <a href="#" class="theme-btn theme-btn-small mr-2"><i class="la la-check-circle mr-1"></i>Approve</a>
+        <a href="#" class="theme-btn theme-btn-small"><i class="la la-times mr-1"></i>Cancel</a>
+    </div>
+</div>
+{% empty %}
+<p>No bookings available.</p>
+{% endfor %}

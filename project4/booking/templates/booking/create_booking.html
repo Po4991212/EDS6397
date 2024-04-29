@@ -1,0 +1,92 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Globetrekker Create booking{% endblock %}
+{% block content %}
+<!-- create_booking.html -->
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Booking Details and Requirements -->
+            <div class="col-lg-7">
+                <p class="subtitle text-primary">Complete your booking</p>
+                <h1 class="h2 mb-5"> Enter booking details <span class="text-muted float-end">Step 1</span></h1>
+                <!-- Form for Booking Details -->
+                <form method="post" action=".">
+                    {% csrf_token %}
+                    <div class="text-block">
+                        <!-- Display any form errors -->
+                        {% if form.errors %}
+                        <div class="alert alert-danger">
+                            Please correct the errors below.
+                        </div>
+                        {% endif %}
+                        <!-- User Input for Booking Information -->
+                        {{ form.as_p }}
+                        <input type="text" name="promo_code" placeholder="Enter promo code" class="form-control">
+                        <br>
+                        <button type="submit" class="btn btn-primary px-3">Confirm Booking</button>
+                        
+                    </div>
+                </form>
+            </div>
+
+            <!-- Service Details Section -->
+            <div class="col-lg-5 ps-xl-5">
+                <div class="card border-0 shadow">
+                    <div class="card-body p-4">
+                        <!-- Service Information Loaded from POST request ID -->
+                        <div class="text-block pb-3">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    {% if service_type == 'flight' %}
+                                    <h6><a class="text-reset" href="#">{{ service.airline }} Flight</a></h6>
+                                    <p class="text-muted text-sm mb-0">{{ service.departure_city }} to {{ service.arrival_city }}</p>
+                                    {% elif service_type == 'hotel' %}
+                                    <h6><a class="text-reset" href="#">{{ service.name }} Hotel</a></h6>
+                                    <p class="text-muted text-sm mb-0">{{ service.city }}, {{ service.country }}</p>
+                                    {% elif service_type == 'tour' %}
+                                    <h6><a class="text-reset" href="#">{{ service.name }} Tour</a></h6>
+                                    <p class="text-muted text-sm mb-0">{{ service.destination }} on {{ service.date }} at {{ service.time }}</p>
+                                    {% endif %}
+                                </div>
+                                <a class="flex-shrink-0" href="#"><img class="ms-3 rounded"
+                                        src="{% static 'images/service-image.jpg' %}" alt="" width="100"></a>
+                            </div>
+                        </div>
+                        <div class="text-block py-3">
+                            <ul class="list-unstyled mb-0">
+                                <div class="text-block py-3">
+                                    <ul class="list-unstyled mb-0">
+                                        {% if service_type == 'flight' %}
+                                        <h6><a class="text-reset" href="#">{{ service.airline }} Flight</a></h6>
+                                        <p class="text-muted text-sm mb-0">From {{ service.departure_city }} to {{ service.arrival_city }}</p>
+                                        <p class="text-sm">Departure: {{ service.flight_date }} at {{ service.flight_time }}</p>
+                                        <p class="text-sm">Duration: {{ service.duration }} Hours</p>
+                                        <p class="text-sm">Fare: {{ service.fare }} Hours</p>
+                                        {% elif service_type == 'hotel' %}
+                                        <h6><a class="text-reset" href="#">{{ service.name }} Hotel</a></h6>
+                                        <p class="text-muted text-sm mb-0">Located in {{ service.city }}, {{ service.country }}</p>
+                                        <p class="text-sm">Total rooms: {{ service.total_rooms }}</p>
+                                        <p class="text-sm">Nightly rate: ${{ service.nightly_rate }}</p>
+                                        {% elif service_type == 'tour' %}
+                                        <h6><a class="text-reset" href="#">{{ service.name }} Tour</a></h6>
+                                        <p class="text-muted text-sm mb-0">{{ service.description }}</p>
+                                        <p class="text-sm">Destination: {{ service.destination }}</p>
+                                        <p class="text-sm">Date: {{ service.date }} at {{ service.time }}</p>
+                                        <p class="text-sm">Duration: {{ service.duration }} days</p>
+                                        <p class="text-sm">Price: {{ service.price }}</p>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

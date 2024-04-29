@@ -1,0 +1,45 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-box">
+                <div class="form-title-wrap">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h3 class="title">Hotel Listings</h3>
+                            <p class="font-size-14">Browse our comprehensive list of hotels.</p>
+                        </div>
+                        <div class="select-contain">
+                            <select name="select" class="select-contain-select" hx-trigger="change"
+                                hx-get="{% url 'dashboard:filter_hotels' %}" hx-target="#hotel-list" hx-swap="innerHTML"
+                                hx-indicator="#loading">
+                                <option value="1">Any City</option>
+                                <option value="2">Highest Rated</option>
+                                <option value="3">Most Rooms</option>
+                            </select>
+                            <div id="loading" style="display:none;">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-content">
+                    <div class="table-form table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Hotel Name</th>
+                                    <th scope="col">City</th>
+                                    <th scope="col">Country</th>
+                                    <th scope="col">Total Rooms</th>
+                                    <th scope="col">Nightly Rate</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="hotel-list">
+                                {% include 'partials/hotels_table.html' %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

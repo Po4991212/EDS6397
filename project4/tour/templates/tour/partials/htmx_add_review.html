@@ -1,0 +1,33 @@
+{% load static %}
+{% load review_tag %}
+{% for review in reviews %}
+<div class="d-flex d-block d-sm-flex review">
+    <div class="text-md-center flex-shrink-0 me-4 me-xl-5">
+        <img class="d-block avatar avatar-xl p-2 mb-2" src="{% static 'img/avatar/avatar-8.jpg' %}" alt="">
+        <span class="text-uppercase text-muted text-sm">{{ review.review_date }}</span>
+    </div>
+    <div>
+        <h6 class="mt-2 mb-1">{{ review.user.first_name }} {{ review.user.last_name }}</h6>
+        <div class="mb-2">
+            <!-- Display star icons based on rating -->
+            {% for star in review.rating|times %}
+            <i class="fa fa-xs fa-star text-primary"></i>
+            {% endfor %}
+        </div>
+        <p class="text-muted text-sm">{{ review.comment }}</p>
+    </div>
+</div>
+{% if review.replies.all %}
+            <div class="comment-replies">
+                <h4>Replies:</h4>
+                {% for reply in review.replies.all %}
+                <div class="reply">
+                    <p><strong>{{ reply.user.username }}</strong> replied on {{ reply.review_date|date:"F j, Y" }}:</p>
+                    <p>{{ reply.comment }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+{% empty %}
+<p>No reviews yet.</p>
+{% endfor %}

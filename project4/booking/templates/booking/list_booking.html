@@ -1,0 +1,112 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Globetrekker Booking List{% endblock %}
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <!-- Breadcrumbs -->
+        <ol class="breadcrumb ps-0  justify-content-start">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item active">Your trips </li>
+        </ol>
+
+        <div class="container mt-5">
+            <h2 class="mb-4">Your Bookings</h2>
+            <div class="row">
+                {% for booking in current_bookings %}
+                <div class="col-xl-3 col-md-4 col-sm-6 mb-5">
+                    <div class="card hover-animate h-100 border-0 shadow">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="w-100">
+                                <h6 class="card-title">
+                                    {% if booking.flight %}
+                                    <a class="text-decoration-none text-dark" href="#">
+                                        Flight to {{ booking.flight.arrival_city }}
+                                    </a>
+                                    <p class="text-muted" href="#">{{ booking.flight.airline }}</p>
+                                    {% elif booking.hotel %}
+                                    <a class="text-decoration-none text-dark" href="#">
+                                        Stay at {{ booking.hotel.name }}
+                                    </a>
+                                    <p class="text-muted" href="#">{{ booking.hotel.city }}</p>
+                                    {% elif booking.tour %}
+                                    <a class="text-decoration-none text-dark" href="#">
+                                        Tour: {{ booking.tour.name }}
+                                    </a>
+                                    <p class="text-muted" href="#">{{ booking.tour.description }}</p>
+                                    {% endif %}
+                                    
+                                </h6>
+                                <p class="text-muted">
+                                    From {{ booking.reservation_date|date:"M d, Y" }}
+                                    to {{ booking.reservation_end_date|date:"M d, Y" }}
+                                </p>
+                                <p class="text-muted">Status: {{ booking.status }}</p>
+                                <a href="{% url 'booking:update-booking' booking_id=booking.id %}" class="btn btn-primary">Edit</a>
+                                <a href="{% url 'booking:detail_booking' booking_id=booking.id %}" class="btn btn-primary">View</a>
+                                <a href="#" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p class="text-muted mb-5">You have no upcoming trips. Start exploring ideas for your next trip.</p>
+                    <p class="mb-6">
+                        <img class="img-fluid" src="{% static 'img/illustration/undraw_trip_dv9f.svg' %}" alt=""
+                            style="width: 400px;">
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <h2 class="mb-4">Past Bookings</h2>
+            <div class="row">
+                {% for booking in past_bookings %}
+                <div class="col-xl-3 col-md-4 col-sm-6 mb-5">
+                    <div class="card hover-animate h-100 border-0 shadow">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="w-100">
+                                <h6 class="card-title">
+                                    {% if booking.flight %}
+                                    <a class="text-decoration-none text-dark" href="#">
+                                        Flight to {{ booking.flight.arrival_city }}
+                                    </a>
+                                    <p class="text-muted" href="#">{{ booking.flight.airline }}</p>
+                                    {% elif booking.hotel %}
+                                    <a class="text-decoration-none text-dark" href="#">
+                                        Stay at {{ booking.hotel.name }}
+                                    </a>
+                                    <p class="text-muted" href="#">{{ booking.hotel.city }}</p>
+                                    {% elif booking.tour %}
+                                    <a class="text-decoration-none text-dark" href="#">
+                                        Tour: {{ booking.tour.name }}
+                                    </a>
+                                    <p class="text-muted" href="#">{{ booking.tour.description }}</p>
+                                    {% endif %}
+                                    
+                                </h6>
+                                <p class="text-muted">
+                                    From {{ booking.reservation_date|date:"M d, Y" }}
+                                    to {{ booking.reservation_end_date|date:"M d, Y" }}
+                                </p>
+                                <p class="text-muted">Status: {{ booking.status }}</p>
+                                <a href="#" class="btn btn-primary">Pay now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p class="text-muted">No past bookings found.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    </div>
+</section>
+{% endblock %}

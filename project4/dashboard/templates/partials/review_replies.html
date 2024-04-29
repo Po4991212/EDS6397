@@ -1,0 +1,11 @@
+<!-- review_replies.html -->
+{% for reply in replies %}
+    <div class="reply">
+        <div class="reply-meta-data">
+            <p class="reply__author">Reply by {{ reply.user.username }} on {{ reply.review_date|date:"F j, Y" }}</p>
+        </div>
+        <p class="reply-content">{{ reply.comment }}</p>
+    </div>
+{% empty %}
+    <p>No replies yet.</p>
+{% endfor %}

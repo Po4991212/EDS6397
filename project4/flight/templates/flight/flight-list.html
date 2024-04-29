@@ -1,0 +1,37 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Globetrekker Flights{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Available Flights</h2>
+  <div class="row">
+    {% for flight in flights %}
+    <div class="col-md-6 col-xl-4 mb-5">
+      <div class="card h-100 border-0 shadow">
+        <div class="card-body">
+          <h5 class="card-title">{{ flight.airline }}</h5>
+          <h6 class="text-muted">{{ flight.flight_date  }} at {{ flight.flight_time  }}</h6>
+          <div class="d-flex justify-content-between my-3">
+            <span class="badge bg-primary">Departure: {{ flight.departure_city }}</span>
+            <span class="badge bg-success">Arrival: {{ flight.arrival_city }}</span>
+          </div>
+          <div class="my-2">
+            <i class="fas fa-clock"></i> Duration: {{ flight.duration }} hours
+          </div>
+          <div class="my-2">
+            <i class="fas fa-chair"></i> Seats available: {{ flight.total_seats }}
+          </div>
+          <div class="my-2">
+            <i class="fas fa-tag"></i> Fare: ${{ flight.fare }}
+          </div>
+          <a href="{% url 'booking:create_booking' service_type='flight' service_id=flight.id %}"
+            class="btn btn-primary mt-3">Book now</a>
+            <a href="{% url 'flight:flight_detail' id=flight.id %}"
+            class="btn btn-primary mt-3">Detail</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

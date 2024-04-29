@@ -1,0 +1,77 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-box">
+                <div class="form-title-wrap">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h3 class="title">Review Lists</h3>
+                            <p class="font-size-14">Showing all entries</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-content">
+                    <div class="comments-list">
+                        {% for review in reviews %}
+                            <div class="comment">
+                                <div class="comment-avatar">
+                                    <!-- Assuming you have a method to get the user avatar url -->
+                                    <img class="avatar__img" alt="User avatar" src="#">
+                                </div>
+                                <div class="comment-body">
+                                    <div class="meta-data">
+                                        <h3 class="comment__author">{{ review.content_object }}</h3>
+                                        <div class="meta-data-inner d-flex">
+                                            <p class="comment__meta mr-1">By <a href="#">{{ review.user.username }}</a></p>
+                                            <span class="ratings d-flex align-items-center mr-1">
+                                                {% for i in "12345" %}
+                                                    {% if forloop.counter <= review.rating %}
+                                                        <i class="la la-star"></i>
+                                                    {% else %}
+                                                        <i class="la la-star-o"></i>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </span>
+                                            <p class="comment__date">{{ review.review_date|date:"F j, Y" }}</p>
+                                        </div>
+                                    </div>
+                                    <p class="comment-content">
+                                        {{ review.comment }}
+                                    </p>
+                                    <div class="comment-replies">
+                                        <!-- Include the review replies here -->
+                                        {% include 'partials/review_replies.html' with replies=review.replies.all %}
+                                    </div>
+                                    <div class="comment-reply">
+                                        <button class="theme-btn" type="button" data-bs-toggle="collapse" data-bs-target="#replyForm{{ review.id }}" aria-expanded="false" aria-controls="replyForm{{ review.id }}">
+                                            <span class="la la-mail-reply mr-1"></span>Reply
+                                        </button>
+                                    </div>
+        
+                                    <!-- Collapsible form area -->
+                                    <div class="collapse" id="replyForm{{ review.id }}">
+                                        <div class="mt-4">
+                                            <form class="form" hx-post="{% url 'dashboard:reply_review' review_id=review.id %}" hx-target="#replyForm{{ review.id }}" hx-swap="innerHTML">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="review_id" value="{{ review.id }}">
+                                                <div class="mb-4">
+                                                    <label for="reply-comment{{ review.id }}" class="form-label">Replying to {{ review.user.first_name }}</label>
+                                                    <textarea class="form-control" rows="4" name="reply-comment" id="reply-comment{{ review.id }}" placeholder="Enter your reply" required></textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Post Reply</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        {% empty %}
+                            <p>No reviews available.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Pagination and footer could be included here if required -->
+</div>

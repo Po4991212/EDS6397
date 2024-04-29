@@ -1,0 +1,59 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Globetrekker Invoices{% endblock %}
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="col-12">
+            {% if messages %}
+              <div class="alert alert-dismissible fade show" role="alert">
+                {% for message in messages %}
+                  <p{% if message.tags %} class="{{ message.tags }} alert alert-danger" {% endif %}>{{ message }}</p>
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endif %}
+          </div>
+        <div class="row">
+            <div class="col">
+                <h2>Make a Payment for Invoice #{{ invoice.id }}</h2>
+                <p>Remaining Balance: $
+                    <span id="remaining-balance">{{ invoice.total_amount }}</span>
+                </p>
+                <form method="post" id="payment-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit Payment</button>
+                </form>
+            </div>
+            <!-- <script>
+                $(document).ready(function () {
+                    $('#payment-form').submit(function (e) {
+                        var remainingBalance = parseFloat($('#remaining-balance').text());
+                        var paymentAmount = parseFloat($('#id_amount').val());
+                        if (paymentAmount > remainingBalance || paymentAmount <= 0) {
+                            alert("The payment amount is invalid. Please enter a valid amount.");
+                            e.preventDefault();
+                        }
+                    });
+                });
+            </script> -->
+        <div class="col">
+            <br>
+            <h1 class="h2 mb-5"> Invoice {{ invoice.id }} details:</h1>
+            <div class="text-block">
+                <h6>Booking Date</h6>
+                <p class="text-sm text-muted">{{ invoice.booking_date }}</p>
+                <h6>Promotion</h6>
+                {% if invoice.promotion %}
+                <p class="text-sm text-muted">-{% widthratio invoice.promotion.discount_percentage 1 100 %}%</p>
+                {% else %}
+                <p class="text-sm text-muted">No promotion applied</p>
+                {% endif %}
+                <h6>Total Amount</h6>
+                <p class="text-sm text-muted">${{ invoice.total_amount }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

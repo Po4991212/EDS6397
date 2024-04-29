@@ -1,0 +1,40 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Globetrekker User Security{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <!-- Breadcrumbs -->
+    <ol class="breadcrumb ps-0  justify-content-start">
+      <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'userprofile:myaccount' %}">Account</a></li>
+      <li class="breadcrumb-item active">Login &amp; security </li>
+    </ol>
+    <h1 class="hero-heading mb-0">Login &amp; security</h1>
+    <p class="text-muted mb-5">Manage your Login & security and settings here.</p>
+    <div class="row">
+      <div class="text-block" id="updatePassword">
+        <form method="POST" action=".">
+          {% csrf_token %}
+          {{ form.as_p }}
+        <!-- <div class="row mt-4">
+          <div class="mb-4 col-12">
+            <label class="form-label" for="password-current">Current Password</label>
+            <input class="form-control" type="password" name="password-current" id="password-current">
+          </div>
+          <div class="mb-4 col-md-6">
+            <label class="form-label" for="password-new">New Password</label>
+            <input class="form-control" type="password" name="password-new" id="password-new">
+          </div>
+          <div class="mb-4 col-md-6">
+            <label class="form-label" for="password-confirm">Confirm Password</label>
+            <input class="form-control" type="password" name="password-confirm" id="password-confirm">
+          </div>
+        </div> -->
+        <button class="btn btn-outline-primary" type="submit">Update Password</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

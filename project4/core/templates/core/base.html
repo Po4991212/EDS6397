@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Globetrekker</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <!-- Price Slider Stylesheets -->
+  <link rel="stylesheet" href="{% static 'vendor/nouislider/nouislider.css' %}">
+  <!-- Google fonts - Playfair Display-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700">
+  <!-- Google fonts - Poppins-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700">
+  <!-- swiper-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.min.css">
+  <!-- Magnigic Popup-->
+  <link rel="stylesheet" href="{% static 'vendor/magnific-popup/magnific-popup.css' %}">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="{% static 'css/style.default.css' %}" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+  <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Template CSS Files -->
+
+</head>
+
+<body style="{% block body-style %}padding-top: 72px;{% endblock %}">
+  <header class="{% block header_class %}header{% endblock %}">
+    <nav class="{% block nav_class %}navbar navbar-expand-lg fixed-top shadow navbar-light bg-white{% endblock %}">
+      <div class="container-fluid">
+        <div class="d-flex align-items-center"><a class="navbar-brand py-3" href="index.html"
+            style="line-height: 0;">Globetrekker</a>
+          <!-- <form class="form-inline d-none d-sm-flex" action="#" id="search">
+            <div class="input-label-absolute input-label-absolute-left input-expand ms-lg-2 ms-xl-3">
+              <label class="label-absolute" for="search_search"><i class="fa fa-search"></i><span class="sr-only">What
+                  are you looking for?</span></label>
+              <input class="form-control form-control-sm border-0 shadow-0 bg-gray-200" id="search_search"
+                placeholder="Search" aria-label="Search" type="search">
+            </div>
+          </form> -->
+        </div>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+          aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+        <!-- Navbar Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <form class="form-inline mt-4 mb-2 d-sm-none" action="#" id="searchcollapsed">
+            <div class="input-label-absolute input-label-absolute-left w-100">
+              <label class="label-absolute" for="searchcollapsed_search"><i class="fa fa-search"></i><span
+                  class="sr-only">What are you looking for?</span></label>
+              <input class="form-control form-control-sm border-0 shadow-0 bg-gray-200" id="searchcollapsed_search"
+                placeholder="Search" aria-label="Search" type="search">
+            </div>
+          </form>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown"><a class="nav-link" id="homeDropdownMenuLink" href="{% url 'index' %}"
+                aria-haspopup="true" aria-expanded="false">
+                Home</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:index' %}">Admin</a>
+            <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Agent</a>
+            <li class="nav-item"><a class="nav-link" href="{% url 'promotion:promotion_list' %}">Promotions</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="#">Welcome {{ user.first_name }} </a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'userprofile:myaccount' %}">User account</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log out</a></li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Sign in</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign up</a></li>
+            {% endif %}
+            <li class="nav-item dropdown mt-3 mt-lg-0 ms-lg-3 d-lg-none d-xl-inline-block">
+              <a class="btn btn-primary dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Book now
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'flight:flight_list' %}">Flights</a></li>
+                <li><a class="dropdown-item" href="{% url 'hotel:hotel_list' %}">Hotels</a></li>
+                <li><a class="dropdown-item" href="{% url 'tour:tour_list' %}">Tours</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  {% block content %}
+  {% endblock %}
+
+  <!-- JavaScript files-->
+  <script>
+    // ------------------------------------------------------- //
+    //   Inject SVG Sprite - 
+    //   see more here 
+    //   https://css-tricks.com/ajaxing-svg-sprite/
+    // ------------------------------------------------------ //
+    function injectSvgSprite(path) {
+
+      var ajax = new XMLHttpRequest();
+      ajax.open("GET", path, true);
+      ajax.send();
+      ajax.onload = function (e) {
+        var div = document.createElement("div");
+        div.className = 'd-none';
+        div.innerHTML = ajax.responseText;
+        document.body.insertBefore(div, document.body.childNodes[0]);
+      }
+    }
+    // to avoid CORS issues when viewing using file:// protocol, using the demo URL for the SVG sprite
+    // use your own URL in production, please :)
+    // https://demo.bootstrapious.com/directory/1-0/icons/orion-svg-sprite.svg
+    //- injectSvgSprite('${path}icons/orion-svg-sprite.svg'); 
+    injectSvgSprite('https://demo.bootstrapious.com/directory/1-4/icons/orion-svg-sprite.svg');
+
+  </script>
+  <!-- jQuery-->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <!-- Bootstrap JS bundle - Bootstrap + PopperJS-->
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- Magnific Popup - Lightbox for the gallery-->
+  <script src="{% static 'vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+  <!-- Smooth scroll-->
+  <script src="{% static 'vendor/smooth-scroll/smooth-scroll.polyfills.min.js' %}"></script>
+  <!-- Bootstrap Select-->
+  <script src="{% static 'vendor/bootstrap-select/js/bootstrap-select.min.js' %}"></script>
+  <!-- Object Fit Images - Fallback for browsers that don't support object-fit-->
+  <script src="{% static 'vendor/object-fit-images/ofi.min.js' %}"></script>
+  <!-- Swiper Carousel                       -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>
+  <script>var basePath = ''</script>
+  <!-- Main Theme JS file    -->
+  <script src="{% static 'js/theme.js' %}"></script>
+  <script src="https://unpkg.com/htmx.org"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const starContainers = document.querySelectorAll('.mb-2[data-rating]');
+      starContainers.forEach(container => {
+        const rating = parseInt(container.getAttribute('data-rating'));
+        const starsDiv = container.querySelector('.stars');
+        for (let i = 0; i < rating; i++) {
+          const star = document.createElement('i');
+          star.className = 'fa fa-xs fa-star text-primary';
+          starsDiv.appendChild(star);
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

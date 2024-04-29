@@ -1,0 +1,92 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}{{ hotel.name }} - Hotel Details{% endblock %}
+
+{% block content %}
+    <section>
+        <!-- Slider main container-->
+        <div class="swiper-container detail-slider slider-gallery">
+          <!-- Additional required wrapper-->
+          <div class="swiper-wrapper">
+            <!-- Slides-->
+            <div class="swiper-slide"><a href="{% static 'img/photo/tour1.jpeg' %}" data-toggle="gallery-top" title="Our street"><img class="img-fluid" src="{% static 'img/photo/tour1.jpeg' %}" alt="Our street"></a></div>
+            <div class="swiper-slide"><a href="{% static 'img/photo/tour2.jpeg' %}" data-toggle="gallery-top" title="Outside"><img class="img-fluid" src="{% static 'img/photo/tour2.jpeg' %}" alt="Outside"></a></div>
+            <div class="swiper-slide"><a href="{% static 'img/photo/tour3.jpeg' %}" data-toggle="gallery-top" title="Rear entrance"><img class="img-fluid" src="{% static 'img/photo/tour3.jpeg' %}" alt="Rear entrance"></a></div>
+            <div class="swiper-slide"><a href="{% static 'img/photo/tour4.jpeg' %}" data-toggle="gallery-top" title="Kitchen"><img class="img-fluid" src="{% static 'img/photo/tour4.jpeg' %}" alt="Kitchen"></a></div>
+            <div class="swiper-slide"><a href="{% static 'img/photo/tour5.jpeg' %}" data-toggle="gallery-top" title="Bedroom"><img class="img-fluid" src="{% static 'img/photo/tour5.jpeg' %}" alt="Bedroom"></a></div>
+            <div class="swiper-slide"><a href="{% static 'img/photo/tour6.jpeg' %}" data-toggle="gallery-top" title="Bedroom"><img class="img-fluid" src="{% static 'img/photo/tour6.jpeg' %}" alt="Bedroom"></a></div>
+          </div>
+          <div class="swiper-pagination swiper-pagination-white"></div>
+          <div class="swiper-button-prev swiper-button-white"></div>
+          <div class="swiper-button-next swiper-button-white"></div>
+        </div>
+      </section>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8"> 
+                <!-- Tour Details -->
+                <div class="text-block">
+                    <p class="text-primary"><i class="fa-map-marker-alt fa me-1"></i> {{ tour.destination }}</p>
+                    <h1>{{ tour.name }}</h1>
+                    <p class="text-muted text-uppercase mb-4">{{ tour.description }}</p>
+                    <ul class="list-inline text-sm mb-4">
+                        <li class="list-inline-item me-3"><i class="fa fa-calendar me-1 text-secondary"></i> {{ tour.date }}</li>
+                        <li class="list-inline-item me-3"><i class="fa fa-clock me-1 text-secondary"></i> {{ tour.time }}</li>
+                        <li class="list-inline-item me-3"><i class="fa fa-hourglass-end me-1 text-secondary"></i> {{ tour.duration }} hours</li>
+                        <li class="list-inline-item me-3"><i class="fa fa-users me-1 text-secondary"></i> Max {{ tour.max_guests }} guests</li>
+                    </ul>
+                    <p class="text-muted fw-light">Embark on a captivating journey through the heart of London, exploring its majestic landmarks, rich history, and vibrant culture. This tour offers an immersive experience into the timeless allure of London, from the grandeur of Buckingham Palace to the historic twists of the Tower of London.</p>
+                </div>
+
+                <!-- Reviews Section -->
+                <div class="text-block">
+                    <p class="subtitle text-sm text-primary">Reviews</p>
+                    <h5 class="mb-4">Listing Reviews</h5>
+                    <div id="reviews-container">
+                        {% include 'partials/htmx_add_review.html' %}
+                    </div>
+                    <div class="py-5">
+                        <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a
+                            review</button>
+                        <div class="collapse mt-4" id="leaveReview">
+                            <h5 class="mb-4">Leave a review</h5>
+                            <form class="form" id="contact-form"
+                                hx-post="{% url 'review:htmx_add_review' service_type='tour' service_id=tour.id %}"
+                                hx-target="#reviews-container" hx-trigger="submit">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="mb-4">
+                                            <label for="rating" class="form-label">Your rating *</label>
+                                            <select class="form-select focus-shadow-0" name="rating" id="rating">
+                                                <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
+                                                <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
+                                                <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
+                                                <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>
+                                                <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="comment" the class="form-label">Review text *</label>
+                                    <textarea class="form-control" rows="4" name="comment" id="comment"
+                                        placeholder="Enter your review" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Post review</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="p-4 shadow ms-lg-4 rounded sticky-top" style="top: 100px;">
+                    <p class="text-muted"><span class="text-primary h2">${{ tour.price }}</span> per tour</p>
+                    <a class="btn btn-primary" href="{% url 'booking:create_booking' service_type='tour' service_id=tour.id %}">Book this tour</a>
+                    <!-- Booking form and other sidebar elements -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Globetrekker Booking List{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Update Booking</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card hover-animate h-100 border-0 shadow">
+                <div class="card-body">
+                    <form method="post" action=".">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        
+                        {% if booking.flight and booking.hotel and booking.tour %}
+                        <button class="btn btn-secondary" disabled>Save Changes (Booking Complete)</button>
+                        <p class="text-success mt-3">This booking is fully booked and cannot be updated.</p>
+                        {% else %}
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

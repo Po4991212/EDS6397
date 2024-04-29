@@ -1,0 +1,24 @@
+{% for flight in flights %}
+<tr>
+    <td>{{ flight.airline }}</td>
+    <td>{{ flight.departure_city }}</td>
+    <td>{{ flight.arrival_city }}</td>
+    <td>{{ flight.flight_date }}</td>
+    <td>{{ flight.flight_time }}</td>
+    <td>{{ flight.calculate_arrival_datetime }}</td>
+    <td>{{ flight.available_seats }}</td>
+    <td>${{ flight.fare }}</td>
+    <td>
+        <div class="table-content">
+            <a href="{% url 'flight:flight_detail' flight.id %}" class="theme-btn theme-btn-small mr-2"
+                data-toggle="tooltip" data-placement="top" title="View details"><i class="la la-eye"></i></a>
+            <a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#modalPopup"><i
+                    class="la la-envelope"></i></a>
+        </div>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="9">No flights available.</td>
+</tr>
+{% endfor %}

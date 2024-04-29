@@ -1,0 +1,24 @@
+{% for tour in tours %}
+<tr>
+    <td>{{ tour.name }}</td>
+    <td>{{ tour.description }}</td>
+    <td>{{ tour.destination }}</td>
+    <td>{{ tour.date|date:"Y-m-d" }}</td>
+    <td>{{ tour.time|date:"H:i" }}</td>
+    <td>{{ tour.duration }}</td>
+    <td>{{ tour.max_guests }}</td>
+    <td>${{ tour.price }}</td>
+    <td>
+        <div class="table-content">
+            <a href="{% url 'tour:tour_detail' tour.id %}" class="theme-btn theme-btn-small mr-2" data-toggle="tooltip"
+                data-placement="top" title="View details"><i class="la la-eye"></i></a>
+            <a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#modalPopup"><i
+                    class="la la-envelope"></i></a>
+        </div>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="9">No tours available.</td>
+</tr>
+{% endfor %}

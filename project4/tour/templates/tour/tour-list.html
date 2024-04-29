@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Globetrekker tours{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Available Tour Packages</h2>
+  <div class="row">
+      {% for tour in tours %}
+      <div class="col-sm-6 col-lg-4 mb-4">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">{{ tour.name }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{ tour.destination }}</h6>
+                  <p class="card-text">{{ tour.description }}</p>
+                  <ul class="list-unstyled">
+                      <li>Date: {{ tour.date|date:"M d, Y" }}</li>
+                      <li>Time: {{ tour.time|time:"H:i" }}</li>
+                      <li>Duration: {{ tour.duration }} hours</li>
+                      <li>Max Guests: {{ tour.max_guests }}</li>
+                      <li>Price: {{ tour.price }}</li>
+                  </ul>
+                  <a href="{% url 'booking:create_booking' service_type='tour' service_id=tour.id %}" class="btn btn-primary">Book Now</a>
+                  <a href="{% url 'tour:tour_detail' id=tour.id %}" class="btn btn-primary">Detail</a>
+              </div>
+          </div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+{% endblock %}

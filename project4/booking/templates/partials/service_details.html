@@ -1,0 +1,38 @@
+<!-- {% if service %}
+    <strong>{{ service_type|title }} Details:</strong><br>
+    {% if service_type == 'flight' %}
+        Departure: {{ service.departure_city }}
+        Destination: {{ service.destination }}
+        Airline: {{ service.airline }}
+        Flight Number: {{ service.flight_time }}
+         Date: {{ service.flight_date }}
+        Arrival city: {{ service.arrival_city }}
+        Arrival Date: {{ service.arrival_date }}
+        Arrival Time: {{ service.arrival_time }}
+        Price: {{ service.fare }}
+    {% elif service_type == 'hotel' %}
+        Hotel Name: {{ service.hotel_name }}
+        Location: {{ service.location }}
+        Check-in Date: {{ service.check_in_date }}
+        Check-out Date: {{ service.check_out_date }}
+        Price: {{ service.price }}
+    {% elif service_type == 'tour' %}
+        Tour Name: {{ service.tour_name }}
+        Location: {{ service.location }}
+        Date: {{ service.date }}
+        Price: {{ service.price }}
+    {% endif %}
+{% else %}
+    <p>No {{ service_type|title }} details found.</p>
+{% endif %}
+ -->
+ {% if service %}
+ <strong>{{ service.get_type_display }} Details:</strong><br>
+ {% for field in service._meta.get_fields %}
+     {% if field.name not in "id" %}
+         <div>{{field.verbose_name.title}}: {{ field.value_from_object(service) }}</div>
+     {% endif %}
+ {% endfor %}
+{% else %}
+ <p>No details available.</p>
+{% endif %}

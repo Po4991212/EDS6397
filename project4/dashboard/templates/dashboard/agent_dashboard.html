@@ -1,0 +1,102 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% block content %}
+<div class="dashboard-content-wrap">
+    <div class="dashboard-bread dashboard-bread-2">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="breadcrumb-content">
+                        <div class="section-heading">
+                            <h2 class="sec__title font-size-30 text-white">Dashboard</h2>
+                        </div>
+                    </div><!-- end breadcrumb-content -->
+                </div><!-- end col-lg-6 -->
+            </div><!-- end row -->
+            <div class="row mt-4">
+                <div class="col-lg-3 responsive-column-l">
+                    <div class="icon-box icon-layout-2 dashboard-icon-box pb-0">
+                        <div class="d-flex pb-3 justify-content-between">
+                            <div class="info-content">
+                                <p class="info__desc">Booking</p>
+                                <h4 class="info__title">{{ bookings|length }}</h4>
+                            </div>
+                            <div class="info-icon icon-element bg-4">
+                                <i class="la la-shopping-cart"></i>
+                            </div>
+                        </div>
+                        <div class="section-block"></div>
+                        <a hx-get="{% url 'dashboard:htmx_list_service' service_type='booking' %}" 
+                            hx-target="#main-content" hx-swap="innerHTML" hx-boost="true"
+                            class="d-flex align-items-center justify-content-between view-all">View All <i
+                                class="la la-angle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 responsive-column-l">
+                    <div class="icon-box icon-layout-2 dashboard-icon-box pb-0">
+                        <div class="d-flex pb-3 justify-content-between">
+                            <div class="info-content">
+                                <p class="info__desc">Flights</p>
+                                <h4 class="info__title">{{ flights|length }}2</h4>
+                            </div><!-- end info-content -->
+                            <div class="info-icon icon-element bg-3">
+                                <i class="la la-plane"></i>
+                            </div><!-- end info-icon-->
+                        </div>
+                        <div class="section-block"></div>
+                        <a hx-get="{% url 'dashboard:htmx_list_service' service_type='flight' %}" hx-boost="true"
+                            hx-target="#main-content" hx-swap="innerHTML"
+                            class="d-flex align-items-center justify-content-between view-all">View All <i
+                                class="la la-angle-right"></i></a>
+                    </div>
+                </div><!-- end col-lg-3 -->
+                <div class="col-lg-3 responsive-column-l">
+                    <div class="icon-box icon-layout-2 dashboard-icon-box pb-0">
+                        <div class="d-flex pb-3 justify-content-between">
+                            <div class="info-content">
+                                <p class="info__desc">Tours</p>
+                                <h4 class="info__title">{{ tours|length }}</h4>
+                            </div><!-- end info-content -->
+                            <div class="info-icon icon-element bg-2">
+                                <i class="la la-mountain"></i>
+                            </div><!-- end info-icon-->
+                        </div>
+                        <div class="section-block"></div>
+                        <a hx-get="{% url 'dashboard:htmx_list_service' service_type='tour' %}" hx-boost="true"
+                            hx-target="#main-content" hx-swap="innerHTML"
+                            class="d-flex align-items-center justify-content-between view-all">View All <i
+                                class="la la-angle-right"></i></a>
+                    </div>
+                </div><!-- end col-lg-3 -->
+                <div class="col-lg-3 responsive-column-l">
+                    <div class="icon-box icon-layout-2 dashboard-icon-box pb-0">
+                        <div class="d-flex pb-3 justify-content-between">
+                            <div class="info-content">
+                                <p class="info__desc">Hotels</p>
+                                <h4 class="info__title">{{ hotels|length }}</h4>
+                            </div><!-- end info-content -->
+                            <div class="info-icon icon-element bg-1">
+                                <i class="la la-hotel"></i>
+                            </div><!-- end info-icon-->
+                        </div>
+                        <div class="section-block"></div>
+                        <a hx-get="{% url 'dashboard:htmx_list_service' service_type='hotel' %}" hx-boost="true"
+                            hx-target="#main-content" hx-swap="innerHTML"
+                            class="d-flex align-items-center justify-content-between view-all">View All <i
+                                class="la la-angle-right"></i></a>
+                    </div>
+                </div><!-- end col-lg-3 -->
+            </div><!-- end row -->
+        </div>
+    </div><!-- end dashboard-bread -->
+    <div class="dashboard-main-content" id="main-content">
+
+    </div>
+</div>
+</div>
+</div>
+</div><!-- end dashboard-content-wrap -->
+<!-- ================================
+    END DASHBOARD AREA
+================================= -->
+{% endblock %}

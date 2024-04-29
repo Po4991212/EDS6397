@@ -1,0 +1,21 @@
+{% for hotel in hotels %}
+<tr>
+    <td>{{ hotel.name }}</td>
+    <td>{{ hotel.city }}</td>
+    <td>{{ hotel.country }}</td>
+    <td>{{ hotel.total_rooms }}</td>
+    <td>${{ hotel.nightly_rate }}</td>
+    <td>
+        <div class="table-content">
+            <a href="{% url 'hotel:hotel_detail' hotel.id %}" class="theme-btn theme-btn-small mr-2"
+                data-toggle="tooltip" data-placement="top" title="View details"><i class="la la-eye"></i></a>
+            <a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#modalPopup"><i
+                    class="la la-envelope"></i></a>
+        </div>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="6">No hotels available.</td>
+</tr>
+{% endfor %}

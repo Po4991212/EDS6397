@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Globetrekker Invoices{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="alert alert-warning" role="alert">
+              <h4 class="alert-heading">Invoice Already Exists!</h4>
+              <p>{{ message }}</p>
+              <hr>
+              <p class="mb-0">Please check the existing invoice or contact support for further assistance.</p>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
