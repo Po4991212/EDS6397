@@ -14,7 +14,8 @@
                     </ol>
                     {% if booking.hotel %}
                     <div class="text-block">
-                        <h6 class="mb-4">{{ booking.duration }} nights in {{ booking.hotel.city }}</h6>
+                        <h5>Hotel booking details</h5>
+                        <p class="mb-4">{{ booking.duration }} nights in {{ booking.hotel.city }} for {{ booking.num_of_guests }} people</p>
                         <div class="row mb-3">
                             <div class="col-md-6 d-flex align-items-center mb-3 mb-md-0">
                                 <div class="date-tile me-3">
@@ -36,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-block">
+                    <div class="text-block ">
                         <div class="row">
                             <div class="col">
                                 <h6> Total cost</h6>
@@ -47,24 +48,73 @@
                     {% endif %}
                     {% if booking.flight %}
                     <div class="text-block">
-                        <h6>Flight Details</h6>
+                        <h5>Flight booking details</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6 d-flex align-items-center mb-3 mb-md-0">
+                                <div class="date-tile me-3">
+                                    <div class="text-uppercase">
+                                        <span class="text-sm">{{ booking.flight.flight_date|date:"M" }}</span><br>
+                                        <strong class="text-lg">{{ booking.flight.flight_date|date:"j" }}</strong>
+                                    </div>
+                                </div>
+                                <p class="text-sm mb-0">Departure city<br>{{ booking.flight.departure_city }} </p>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="date-tile me-3">
+                                    <div class="text-uppercase">
+                                        <span class="text-sm">{{ booking.flight.calculate_arrival_datetime|date:"M" }}</span><br>
+                                        <strong class="text-lg">{{ booking.flight.calculate_arrival_datetime|date:"j" }}</strong>
+                                    </div>
+                                </div>
+                                <p class="text-sm mb-0">Arrival city<br>{{ booking.flight.arrival_city }}</p>
+                            </div>
+                        </div>
                         <p>Departure: {{ booking.flight.departure_city }} at {{ booking.flight.flight_time }}</p>
                         <p> Duration: {{ booking.flight.duration }}</p>
                         <p>Arrival: {{ booking.flight.arrival_airport }}</p>
                     </div>
+                    <div class="text-block">
+                        <div class="row">
+                            <div class="col">
+                                <h6> Total cost</h6>
+                                <p class="text-muted">{{ flight.fare }}</p>
+                            </div>
+                        </div>
+                    </div>
                     {% endif %}
                     {% if booking.tour %}
                     <div class="text-block">
-                        <h6>Tour Details</h6>
+                        <h5>Tour booking details</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6 d-flex align-items-center mb-3 mb-md-0">
+                                <div class="date-tile me-3">
+                                    <div class="text-uppercase">
+                                        <span class="text-sm">{{ booking.tour.date|date:"M" }}</span><br>
+                                        <strong class="text-lg">{{ booking.tour.date|date:"j" }}</strong>
+                                    </div>
+                                </div>
+                                <p class="text-sm mb-0">Tour starts at<br>{{ booking.tour.time }} </p>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="date-tile me-3">
+                                    <div class="text-uppercase">
+                                        <span class="text-sm">{{ booking.tour.date|date:"M" }}</span><br>
+                                        <strong class="text-lg">{{ booking.tour.date|date:"j" }}</strong>
+                                    </div>
+                                </div>
+                                <p class="text-sm mb-0">Tour ends at<br>{{ booking.tour.get_end_time }}</p>
+                            </div>
+                        </div>
                         <p>{{ booking.tour.description }}</p>
                         <p>Date: {{ booking.tour.date }}</p>
-                        <p>Duration: {{ booking.tour.duration }}</p>
+                        <p>Duration: {{ booking.tour.duration }} hour(s)</p>
                     </div>
-                    {% endif %}
                     <div class="text-block">
                         <h6> Total cost</h6>
-                        <p class="text-muted">{{ booking.total_cost }}</p>
-                    </div>                   
+                        <p class="text-muted">{{ tour.total_cost }}</p>
+                    </div> 
+                    {% endif %}
+                                      
 
                 </div>
                 <div class="col-lg-4">

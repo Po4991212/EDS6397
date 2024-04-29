@@ -93,7 +93,7 @@
                                     to {{ booking.reservation_end_date|date:"M d, Y" }}
                                 </p>
                                 <p class="text-muted">Status: {{ booking.status }}</p>
-                                <a href="#" class="btn btn-primary">Pay now</a>
+                                <a href="{% url 'booking:detail_booking' booking.id %}" class="btn btn-primary">Details</a>
                             </div>
                         </div>
                     </div>

@@ -163,14 +163,12 @@ def update_booking(request, booking_id):
 @login_required
 def detail_booking(request, booking_id):
     booking = get_object_or_404(Booking, pk=booking_id)
-    reviews = booking.review_set.all()
 
     context = {
         'booking': booking,
         'hotel': booking.hotel,
         'flight': booking.flight,
         'tour': booking.tour,
-        'reviews': reviews
     }
     return render(request, 'booking/detail_booking.html', context)
 

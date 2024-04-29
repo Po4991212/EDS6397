@@ -42,21 +42,21 @@ class BookingUpdateForm(forms.ModelForm):
         empty_label="No Tour Selected"
     )
     reservation_date = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'readonly': True})
     )
     reservation_end_date = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'readonly': True})
     )
     num_of_guests = forms.IntegerField(
-        widget=forms.NumberInput(attrs={'class': 'form-control'})
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'readonly': True})
     )
     traveler_fname = forms.CharField(
         max_length=20,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'readonly': True})
     )
     traveler_lname = forms.CharField(
         max_length=20,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'readonly': True})
     )
     class Meta:
         model = Booking
