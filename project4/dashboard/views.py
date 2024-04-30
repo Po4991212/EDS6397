@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import  login_required
 from booking.models import Booking
 from tour.models import Tour
@@ -9,6 +9,12 @@ from django.db.models import Avg, OuterRef, Subquery
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from userprofile.models import Userprofile
+from django.contrib import messages
+from django.views.decorators.http import require_http_methods
+from django.core.files.storage import default_storage
 
 # Create your views here.
 
@@ -77,7 +83,7 @@ def reply_review(request, review_id):
     if not reply_text:
         return HttpResponseBadRequest("Reply text is required")
 
-    reply = Review.objects.create(
+    Review.objects.create(
         user=request.user,
         rating=0,
         comment=reply_text,
@@ -142,3 +148,42 @@ def filter_hotels(request):
         hotels = Hotel.objects.all()
 
     return render(request, 'partials/hotels_table.html', {'hotels': hotels})
+
+@login_required
+def create_user(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    user = User.objects.create_user(username=username, password=password)
+    user.save()
+    users = User.objects.all()
+    return render(request, 'partials/user_table.html', {'users': users})
+
+@login_required
+def user_detail(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    return render(request, 'dashboard/dashboard_user_detail.html', {'user': user})
+
+@login_required
+def edit_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.save()
+        user.userprofile
+        user.userprofile.street_address = request.POST.get('street_address')
+        user.userprofile.city = request.POST.get('city')
+        user.userprofile.state = request.POST.get('state')
+        user.userprofile.zipcode = request.POST.get('zipcode')
+        user.userprofile.phone_number = request.POST.get('phone_number')
+        user.userprofile.save()
+        messages.success(request, 'User updated successfully')
+        return HttpResponse('User updated successfully')
+    
+@login_required
+def user_delete(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user.delete()
+    return redirect(reverse('dashboard:index'))

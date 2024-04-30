@@ -4,6 +4,8 @@ from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.db import transaction
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
+from django.contrib.auth.models import User
+from userprofile.models import Userprofile
 
 
 
@@ -77,3 +79,8 @@ def change_password(request):
         'form': form
     })
     
+@login_required
+def list_users(request):
+    users = User.objects.select_related('userprofile').all()
+    context = {'users': users}
+    return render(request, 'dashboard/dashboard_user.html', context)

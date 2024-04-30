@@ -299,7 +299,8 @@
                     </li>
                     <li><a hx-get="{% url 'dashboard:review_list' %}" hx-boost="true"
                         hx-target="#main-content" hx-swap="innerHTML"><i class="la la-star mr-2 text-color-5"></i>Reviews</a></li>
-                    <li><a href="#"><i class="la la-text-width mr-2 text-color-7"></i>Resources</a></li>
+                    <li><a hx-get="{% url 'userprofile:list_users' %}" hx-boost="true"
+                        hx-target="#main-content" hx-swap="innerHTML"><i class="la la-text-width mr-2 text-color-7"></i>Users</a></li>
                     <li>
                         <span class="side-menu-icon toggle-menu-icon">
                             <i class="la la-angle-down"></i>
