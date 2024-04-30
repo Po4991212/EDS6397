@@ -27,7 +27,9 @@ Then, create and activate a virtual environment:
 
 ```bash
 # For Windows command prompt
-virtualenv venv
+virtualenv venv ## command line will create a virtual environment named venv
+cd venv/Scripts ## change directory to activate virtual environment
+activate ## run activate script to activate virtual environment
 # For Git Bash
 source venv/bin/activate # On Windows use venv\Scripts\activate
 ```
