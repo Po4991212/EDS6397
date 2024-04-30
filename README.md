@@ -70,3 +70,18 @@ python manage.py runserver
 ```
 
 The server will start at http://127.0.0.1:8000/. You can now access the application in your web browser.
+
+### Basic git commands
+## Pulling changes from a remote repository (suggested before you work on the project)
+
+```bash
+git pull REMOTE-NAME BRANCH-NAME
+# Grabs online updates and merges them with your local work
+```
+
+## Pushing commits to a remote repository
+
+```bash
+git push REMOTE-NAME BRANCH-NAME
+```
+

@@ -4,3 +4,4 @@ Pillow
 sqlparse 
 mysqlclient
 django-crispy-forms
+django-jazzmin
